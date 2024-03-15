@@ -1,4 +1,6 @@
-from database import db, Usuario, Caixa
+from databaseUsuario import db,Usuario
+from databaseCaixa import dbv,Caixa
+
 from tkinter import *
 from peewee import DoesNotExist
 
@@ -12,6 +14,7 @@ def center_window(window, width, height):
     window.geometry('%dx%d+%d+%d' % (width, height, x, y))
 
 def sair(janela):
+    global usuario_logado
     janela.destroy()
     janela_inicial()
     usuario_logado = ''
