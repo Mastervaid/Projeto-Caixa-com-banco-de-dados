@@ -39,9 +39,25 @@ class JanelaDeDeposito:
 
     def aumentar(self, entrada, valor):
         self.notas.append(str(valor))
-        if valor in self.listas_notas:
-            self.listas_notas[valor] += 1
-
+        
+        if valor == 200:
+            self.listas_notas['nota200'] += 1
+        if valor == 100:
+            self.listas_notas['nota100'] += 1
+        if valor == 50:
+            self.listas_notas['nota50'] += 1
+        if valor == 20:
+            self.listas_notas['nota20'] += 1
+        if valor == 10:
+            self.listas_notas['nota10'] += 1
+        if valor == 5:
+            self.listas_notas['nota5'] += 1
+        if valor == 2:
+            self.listas_notas['nota2'] += 1
+        if valor == 1:
+            self.listas_notas['moeda1'] += 1
+        
+        print(self.listas_notas)
         valor_total_atual = int(self.entry_total.get())
         novo_valor_atual = valor_total_atual + valor
         self.entry_total.delete(0, 'end')
@@ -91,38 +107,11 @@ class JanelaDeDeposito:
         self.usuario_logado.valor = self.novo_caixa
         self.usuario_logado.save()
 
-        self.v1 = int(self.caixa.nota200)
-        self.nv1 = self.v1 + self.listas_notas["nota200"]
-        self.caixa.nota200 = self.nv1
-        
-        self.v2 = int(self.caixa.nota100)
-        self.nv2 = self.v2 + self.listas_notas['nota100']
-        self.caixa.nota100 =self. nv2
+        for nota in self.listas_notas:
+            valor_atual = int(getattr(self.caixa, nota))
+            novo_valor = valor_atual + self.listas_notas[nota]
+            setattr(self.caixa, nota, novo_valor)
 
-        self.v2 = int(self.caixa.nota50)
-        self.nv2 = self.v2 + self.listas_notas['nota50']
-        self.caixa.nota50 = self.nv2
-        
-        self.v2 = int(self.caixa.nota20)
-        self.nv2 = self.v2 + self.listas_notas['nota20']
-        self.caixa.nota20 =self.nv2
-        
-        self.v2 = int(self.caixa.nota10)
-        self.nv2 = self.v2 + self.listas_notas['nota10']
-        self.caixa.nota10 = self.nv2
-        
-        self.v2 = int(self.caixa.nota5)
-        self.nv2 = self.v2 + self.listas_notas['nota5']
-        self.caixa.nota5 = self.nv2
-        
-        self.v2 = int(self.caixa.nota2)
-        self.nv2 = self.v2 + self.listas_notas['nota2']
-        self.caixa.nota2 = self.nv2
-        
-        self.v2 = int(self.caixa.moeda1)
-        self.nv2 = self.v2 + self.listas_notas['moeda1']
-        self.caixa.moeda1 = self.nv2
-        
         self.caixa.save()
         self.janela_posdeposito(self.entry_total.get())
 
