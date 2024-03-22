@@ -40,11 +40,10 @@ class JanelaInicial:
     
     def ir_cadastro(self):
         from JanelaDeCadastro import JanelaDeCadastro
-        self.janela.destroy()
-        if __name__ == "__main__":
-            Janela_de_Cadastro = Tk() 
-            Janela_De_Cadastro = JanelaDeCadastro(Janela_de_Cadastro)
-            Janela_De_Cadastro.show()
+        self.janela.destroy()      
+        Janela_de_Cadastro = Tk() 
+        Janela_De_Cadastro = JanelaDeCadastro(Janela_de_Cadastro)
+        Janela_De_Cadastro.show()
 
     def logar(self):
         from JaneladoUsuario import JanelaDoUsuario 
@@ -54,10 +53,10 @@ class JanelaInicial:
         except DoesNotExist:
             print("Erro", "Usuário não encontrado.")
         self.janela.destroy()
-        if __name__ == "__main__":
-            janela_usuario = Tk()
-            Janela_Do_Usuario = JanelaDoUsuario(janela_usuario)
-            Janela_Do_Usuario.show()
+        
+        janela_usuario = Tk()
+        Janela_Do_Usuario = JanelaDoUsuario(usuario_logado=usuario_logado,janela=janela_usuario)
+        Janela_Do_Usuario.show()
 
     @staticmethod
     def center_window(window, width, height):

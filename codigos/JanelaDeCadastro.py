@@ -43,7 +43,11 @@ class JanelaDeCadastro:
         Usuario.create(nome=self.entry_nome.get(), email=self.entry_email.get(), senha=self.entry_senha.get(), valor="0")
 
     def ir_janela_inicial(self):
+        from JanelaInicial import JanelaInicial
         self.janela.destroy()
+        Janela_de_inicio = Tk() 
+        Janela_De_inicio = JanelaInicial(Janela_de_inicio)
+        Janela_De_inicio.show()
 
     @staticmethod
     def center_window(window, width, height):
@@ -55,5 +59,4 @@ class JanelaDeCadastro:
 
         window.geometry("%dx%d+%d+%d" % (width, height, x_coordinate, y_coordinate))
 
-# Para utilizar a classe, você pode instanciá-la assim:
-# janela_cadastro = JanelaDeCadastro()
+#Terminado

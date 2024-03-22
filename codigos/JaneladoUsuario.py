@@ -29,7 +29,7 @@ class JanelaDoUsuario:
         self.botao_depositar = Button(janela, text="Depositar", command=self.ir_janela_de_deposito, font=("Minecraft", 10))
         self.botao_depositar.place(x=150, y=200)
 
-        self.botao_sair = Button(janela, text="Sair", command=self.janela.quit, font=("Minecraft", 10))
+        self.botao_sair = Button(janela, text="Sair", command=self.sair, font=("Minecraft", 10))
         self.botao_sair.place(x=300, y=200)
 
         self.janela.mainloop()
@@ -39,11 +39,20 @@ class JanelaDoUsuario:
     
     def ir_janela_de_saque(self):
         self.janela.destroy()
-        JanelaDeSaque(self.usuario_logado)
+        janela_de_saque = Tk()
+        janela_De_saque = JanelaDeSaque(janela_de_saque,self.usuario_logado)
+        janela_De_saque.show()
 
     def ir_janela_de_deposito(self):
         self.janela.destroy()
         JanelaDeDeposito(self.usuario_logado)
+
+    def sair(self):
+        self.janela.destroy()
+        from JanelaInicial import JanelaInicial
+        janela_inicial = Tk()
+        janela_Inicial = JanelaInicial(janela_inicial)
+        janela_Inicial.show()
 
     @staticmethod
     def center_window(window, width, height):

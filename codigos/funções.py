@@ -1,6 +1,5 @@
 from databaseUsuario import db,Usuario
 from databaseCaixa import dbv,Caixa
-
 from tkinter import *
 from peewee import DoesNotExist
 

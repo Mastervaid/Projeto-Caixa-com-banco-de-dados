@@ -83,44 +83,78 @@ class JanelaDeDeposito:
         botao_sacar.place(x=210, y=50*y)
 
     def depositar(self):
-        caixa_atual = int(self.usuario_logado.valor)
-        total = int(self.entry_total.get())
-        novo_caixa = caixa_atual + total
-        self.usuario_logado.valor = novo_caixa
+        from databaseCaixa import Caixa
+        self.caixa = Caixa.get(Caixa.id == 1) 
+        self.caixa_atual = int(self.usuario_logado.valor)
+        self.total = int(self.entry_total.get())
+        self.novo_caixa = self.caixa_atual + self.total
+        self.usuario_logado.valor = self.novo_caixa
         self.usuario_logado.save()
 
-        for nota, quantidade in self.listas_notas.items():
-            valor_atual = getattr(self.caixa, nota)
-            setattr(self.caixa, nota, valor_atual + quantidade)
+        self.v1 = int(self.caixa.nota200)
+        self.nv1 = self.v1 + self.listas_notas["nota200"]
+        self.caixa.nota200 = self.nv1
+        
+        self.v2 = int(self.caixa.nota100)
+        self.nv2 = self.v2 + self.listas_notas['nota100']
+        self.caixa.nota100 =self. nv2
+
+        self.v2 = int(self.caixa.nota50)
+        self.nv2 = self.v2 + self.listas_notas['nota50']
+        self.caixa.nota50 = self.nv2
+        
+        self.v2 = int(self.caixa.nota20)
+        self.nv2 = self.v2 + self.listas_notas['nota20']
+        self.caixa.nota20 =self.nv2
+        
+        self.v2 = int(self.caixa.nota10)
+        self.nv2 = self.v2 + self.listas_notas['nota10']
+        self.caixa.nota10 = self.nv2
+        
+        self.v2 = int(self.caixa.nota5)
+        self.nv2 = self.v2 + self.listas_notas['nota5']
+        self.caixa.nota5 = self.nv2
+        
+        self.v2 = int(self.caixa.nota2)
+        self.nv2 = self.v2 + self.listas_notas['nota2']
+        self.caixa.nota2 = self.nv2
+        
+        self.v2 = int(self.caixa.moeda1)
+        self.nv2 = self.v2 + self.listas_notas['moeda1']
+        self.caixa.moeda1 = self.nv2
         
         self.caixa.save()
-        self.janela_posdeposito()
+        self.janela_posdeposito(self.entry_total.get())
 
-    def janela_posdeposito(self):
+    def janela_posdeposito(self,entry_total):
         self.janela_depositar.destroy()
         self.janela_pos_deposito = Tk()
-        self.janela_posdeposito.title("Depósito finalizado com sucesso")
-        self.janela_posdeposito.maxsize(360, 200)
-        self.janela_posdeposito.minsize(360, 200)
-        self.center_window(self.janela_posdeposito, 360, 200)
+        self.janela_pos_deposito.title("Depósito finalizado com sucesso")
+        self.janela_pos_deposito.maxsize(360, 200)
+        self.janela_pos_deposito.minsize(360, 200)
+        self.center_window(self.janela_pos_deposito, 360, 200)
 
-        botao_ok = Button(self.janela_posdeposito, text='OK', font=('Minecraft', 9), command=self.ok)
-        botao_ok.place(x=360/2, y=150)
+        self.botao_ok = Button(self.janela_pos_deposito, text='OK', font=('Minecraft', 9), command=self.ok)
+        self.botao_ok.place(x=360/2, y=150)
 
-        label = Label(self.janela_posdeposito, text=f'Você depositou o valor de: {self.entry_total.get()}', font=('Minecraft', 8))
-        label.place(x=10, y=10)
+        self.label = Label(self.janela_pos_deposito, text=f'Você depositou o valor de: {entry_total}', font=('Minecraft', 8))
+        self.label.place(x=10, y=10)
 
-        self.janela_posdeposito.mainloop()
+        self.janela_pos_deposito.mainloop()
 
     def ok(self):
         from JaneladoUsuario import JanelaDoUsuario 
-        self.janela_posdeposito.destroy()
-        JanelaDoUsuario(self.usuario_logado)
+        self.janela_pos_deposito.destroy()
+        janela_usuario = Tk()
+        Janela_Do_Usuario = JanelaDoUsuario(usuario_logado=self.usuario_logado,janela=janela_usuario)
+        Janela_Do_Usuario.show()
 
     def voltar(self):
         from JaneladoUsuario import JanelaDoUsuario 
         self.janela_depositar.destroy()
-        JanelaDoUsuario(self.usuario_logado)
+        janela_usuario = Tk()
+        janela_De_usiario = JanelaDoUsuario(self.usuario_logado,janela_usuario)
+        janela_De_usiario.show()
 
     @staticmethod
     def center_window(window, width, height):
@@ -132,5 +166,4 @@ class JanelaDeDeposito:
 
         window.geometry("%dx%d+%d+%d" % (width, height, x_coordinate, y_coordinate))
 
-# Para utilizar a classe, você pode instanciá-la assim:
-# janela_deposito = JanelaDeDeposito(usuario_logado)
+
